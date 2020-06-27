@@ -7,8 +7,14 @@ output:
 
 
 ## Loading and preprocessing the data
+Load data set from zip file and store into data_set varibale
 
-
+```{r}
+data_set<-read.csv(unz("activity.zip", "activity.csv"),header = TRUE)
+names(data_set)
+head(data_set)
+summary(data_set)
+```
 
 ## What is mean total number of steps taken per day?
 
