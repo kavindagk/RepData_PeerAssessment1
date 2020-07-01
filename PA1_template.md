@@ -235,9 +235,6 @@ weekend <- aggregate(steps~interval,data = data_set[data_set$week %in% c("Saturd
 weekday <- aggregate(steps~interval,data = data_set[!data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
 ```
 
-
-```
-## Warning: package 'ggplot2' was built under R version 3.6.3
-```
-
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->![](PA1_template_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+
+

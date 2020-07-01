@@ -103,13 +103,12 @@ weekend <- aggregate(steps~interval,data = data_set[data_set$week %in% c("Saturd
 
 weekday <- aggregate(steps~interval,data = data_set[!data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
 
+
 ```
 
 ```{r echo=FALSE}
-
-par(mfrow=c(2,1))
-library(ggplot2)
-ggplot(data=weekend,aes(x=interval)) + geom_line(aes(y=steps),lwd=1.2)+ggtitle("Activity patterns between weekdays and weekends")+xlab("Interval")+ylab("No. of Average Steps")
-
-ggplot(data=weekday,aes(x=interval)) + geom_line(aes(y=steps),lwd=1.2)+ggtitle("Activity patterns between weekdays and weekends")+xlab("Interval")+ylab("No. of Average Steps")
+plot(weekday, type = "l", col = "green", main = "Weekdays")
+plot(weekend, type = "l", col = "red", main = "Weekends")
 ```
+
+
