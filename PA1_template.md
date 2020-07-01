@@ -94,6 +94,36 @@ median(sub_set$steps)
 
 ## What is the average daily activity pattern?
 
+```r
+#Avg daily activity - Filter and aggregate data excluding null
+avg_set <- aggregate(steps~interval,data = data_set,FUN = mean,na.rm = T)
+head(avg_set)
+```
+
+```
+##   interval     steps
+## 1        0 1.7169811
+## 2        5 0.3396226
+## 3       10 0.1320755
+## 4       15 0.1509434
+## 5       20 0.0754717
+## 6       25 2.0943396
+```
+
+```r
+plot(steps~interval,data=avg_set,type="l",xlab="Steps",ylab="Interval",col="red",main="Average daily activity")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+```r
+#Interval maximum number of steps
+avg_set$interval[which.max(avg_set$steps)]
+```
+
+```
+## [1] 835
+```
 
 
 ## Imputing missing values

@@ -30,11 +30,23 @@ mean(sub_set$steps)
 
 #median
 median(sub_set$steps)
+
+
 ```
 
 
 ## What is the average daily activity pattern?
+```{r}
+#Avg daily activity - Filter and aggregate data excluding null
+avg_set <- aggregate(steps~interval,data = data_set,FUN = mean,na.rm = T)
+head(avg_set)
 
+plot(steps~interval,data=avg_set,type="l",xlab="Steps",ylab="Interval",col="red",main="Average daily activity")
+
+#Interval maximum number of steps
+avg_set$interval[which.max(avg_set$steps)]
+
+```
 
 
 ## Imputing missing values
