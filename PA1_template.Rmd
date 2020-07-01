@@ -94,3 +94,22 @@ The mean and the median are now almost the same after replacing missing values w
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r echo=TRUE}
+#create new coloumn iside data frame and fill with day 
+data_set$week <-weekdays(as.Date(data_set$date),abbreviate = FALSE)
+head(data_set)
+
+weekend <- aggregate(steps~interval,data = data_set[data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
+
+weekday <- aggregate(steps~interval,data = data_set[!data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
+
+```
+
+```{r echo=FALSE}
+
+par(mfrow=c(2,1))
+library(ggplot2)
+ggplot(data=weekend,aes(x=interval)) + geom_line(aes(y=steps),lwd=1.2)+ggtitle("Activity patterns between weekdays and weekends")+xlab("Interval")+ylab("No. of Average Steps")
+
+ggplot(data=weekday,aes(x=interval)) + geom_line(aes(y=steps),lwd=1.2)+ggtitle("Activity patterns between weekdays and weekends")+xlab("Interval")+ylab("No. of Average Steps")
+```

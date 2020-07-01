@@ -205,6 +205,39 @@ median(sub_set$steps)
 ```
 ## [1] 10766.19
 ```
+**Answer To Question:**
+The mean and the median are now almost the same after replacing missing values with the mean value for the relevant interval. It makes sense that the median value would now move closer to the mean. So the Median value increased after this method of missing value replacement.
+
+
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```r
+#create new coloumn iside data frame and fill with day 
+data_set$week <-weekdays(as.Date(data_set$date),abbreviate = FALSE)
+head(data_set)
+```
+
+```
+##       steps       date interval   week
+## 1 1.7169811 2012-10-01        0 Monday
+## 2 0.3396226 2012-10-01        5 Monday
+## 3 0.1320755 2012-10-01       10 Monday
+## 4 0.1509434 2012-10-01       15 Monday
+## 5 0.0754717 2012-10-01       20 Monday
+## 6 2.0943396 2012-10-01       25 Monday
+```
+
+```r
+weekend <- aggregate(steps~interval,data = data_set[data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
+
+weekday <- aggregate(steps~interval,data = data_set[!data_set$week %in% c("Saturday","Sunday"),],FUN = mean,na.rm = T)
+```
+
+
+```
+## Warning: package 'ggplot2' was built under R version 3.6.3
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->![](PA1_template_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
