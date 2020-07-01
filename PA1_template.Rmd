@@ -9,15 +9,16 @@ output:
 ## Loading and preprocessing the data
 Load data set from zip file and store into data_set variable
 
-```{r}
+```{r echo=TRUE}
 data_set<-read.csv(unz("activity.zip", "activity.csv"),header = TRUE)
 names(data_set)
 head(data_set)
 summary(data_set)
+
 ```
 
 ## What is mean total number of steps taken per day?
-```{r}
+```{r echo=TRUE}
 #Steps taken per day - Filter and aggregate data excluding null
 sub_set <- aggregate(steps~date,data = data_set,FUN = sum,na.rm = T)
 head(sub_set)
@@ -36,7 +37,7 @@ median(sub_set$steps)
 
 
 ## What is the average daily activity pattern?
-```{r}
+```{r echo=TRUE}
 #Avg daily activity - Filter and aggregate data excluding null
 avg_set <- aggregate(steps~interval,data = data_set,FUN = mean,na.rm = T)
 head(avg_set)
@@ -50,6 +51,45 @@ avg_set$interval[which.max(avg_set$steps)]
 
 
 ## Imputing missing values
+```{r echo=TRUE}
+
+#Print missing steps
+sum(is.na(data_set$steps)==TRUE)
+
+# calculate mean for each interval
+x<-aggregate(steps~interval,data = data_set,FUN = mean,na.rm = T)
+
+#Create function replace null with average value
+NA_Replace <- function(step,avgval){
+  if(is.na(step)==TRUE){
+    return(avgval)
+  }
+  return(step)
+}
+
+#new updated data set
+
+data_set$steps<-mapply(NA_Replace,data_set$steps, x$steps)
+head(data_set)
+
+
+#Steps taken per day - Filter and aggregate data excluding null
+sub_set <- aggregate(steps~date,data = data_set,FUN = sum,na.rm = T)
+head(sub_set)
+
+# Histogram
+hist(sub_set$steps,xlab="Steps",ylab = "Frequency/Count",main="Total number of steps taken each day",col="green")
+
+#mean
+mean(sub_set$steps)
+
+#median
+median(sub_set$steps)
+
+```
+**Answer To Question:**
+The mean and the median are now almost the same after replacing missing values with the mean value for the relevant interval. It makes sense that the median value would now move closer to the mean. So the Median value increased after this method of missing value replacement.
+
 
 
 

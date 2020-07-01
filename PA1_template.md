@@ -128,6 +128,83 @@ avg_set$interval[which.max(avg_set$steps)]
 
 ## Imputing missing values
 
+```r
+#Print missing steps
+sum(is.na(data_set$steps)==TRUE)
+```
+
+```
+## [1] 2304
+```
+
+```r
+# calculate mean for each interval
+x<-aggregate(steps~interval,data = data_set,FUN = mean,na.rm = T)
+
+#Create function replace null with average value
+NA_Replace <- function(step,avgval){
+  if(is.na(step)==TRUE){
+    return(avgval)
+  }
+  return(step)
+}
+
+#new updated data set
+
+data_set$steps<-mapply(NA_Replace,data_set$steps, x$steps)
+head(data_set)
+```
+
+```
+##       steps       date interval
+## 1 1.7169811 2012-10-01        0
+## 2 0.3396226 2012-10-01        5
+## 3 0.1320755 2012-10-01       10
+## 4 0.1509434 2012-10-01       15
+## 5 0.0754717 2012-10-01       20
+## 6 2.0943396 2012-10-01       25
+```
+
+```r
+#Steps taken per day - Filter and aggregate data excluding null
+sub_set <- aggregate(steps~date,data = data_set,FUN = sum,na.rm = T)
+head(sub_set)
+```
+
+```
+##         date    steps
+## 1 2012-10-01 10766.19
+## 2 2012-10-02   126.00
+## 3 2012-10-03 11352.00
+## 4 2012-10-04 12116.00
+## 5 2012-10-05 13294.00
+## 6 2012-10-06 15420.00
+```
+
+```r
+# Histogram
+hist(sub_set$steps,xlab="Steps",ylab = "Frequency/Count",main="Total number of steps taken each day",col="green")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
+#mean
+mean(sub_set$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+#median
+median(sub_set$steps)
+```
+
+```
+## [1] 10766.19
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
