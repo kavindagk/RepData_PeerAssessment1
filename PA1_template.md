@@ -7,7 +7,7 @@ output:
 
 
 ## Loading and preprocessing the data
-Load data set from zip file and store into data_set varibale
+Load data set from zip file and store into data_set variable
 
 
 ```r
@@ -50,6 +50,46 @@ summary(data_set)
 
 ## What is mean total number of steps taken per day?
 
+```r
+#Steps taken per day - Filter and aggregate data excluding null
+sub_set <- aggregate(steps~date,data = data_set,FUN = sum,na.rm = T)
+head(sub_set)
+```
+
+```
+##         date steps
+## 1 2012-10-02   126
+## 2 2012-10-03 11352
+## 3 2012-10-04 12116
+## 4 2012-10-05 13294
+## 5 2012-10-06 15420
+## 6 2012-10-07 11015
+```
+
+```r
+# Histogram
+hist(sub_set$steps,xlab="Steps",ylab = "Frequency/Count",main="Total number of steps taken each day",col="green")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+```r
+#mean
+mean(sub_set$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+#median
+median(sub_set$steps)
+```
+
+```
+## [1] 10765
+```
 
 
 ## What is the average daily activity pattern?

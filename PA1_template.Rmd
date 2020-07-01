@@ -17,7 +17,20 @@ summary(data_set)
 ```
 
 ## What is mean total number of steps taken per day?
+```{r}
+#Steps taken per day - Filter and aggregate data excluding null
+sub_set <- aggregate(steps~date,data = data_set,FUN = sum,na.rm = T)
+head(sub_set)
 
+# Histogram
+hist(sub_set$steps,xlab="Steps",ylab = "Frequency/Count",main="Total number of steps taken each day",col="green")
+
+#mean
+mean(sub_set$steps)
+
+#median
+median(sub_set$steps)
+```
 
 
 ## What is the average daily activity pattern?
