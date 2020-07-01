@@ -7,7 +7,7 @@ output:
 
 
 ## Loading and preprocessing the data
-Load data set from zip file and store into data_set varibale
+Load data set from zip file and store into data_set variable
 
 ```{r}
 data_set<-read.csv(unz("activity.zip", "activity.csv"),header = TRUE)
